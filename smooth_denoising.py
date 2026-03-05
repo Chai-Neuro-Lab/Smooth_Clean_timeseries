@@ -11,7 +11,7 @@ from nilearn.interfaces.fmriprep import load_confounds_strategy
 import glob
 
 
-def smooth_fmri_data(input_file, output_file, left_surface, right_surface, smoothing_fwhm):
+def smooth_fmri_data(input_file, output_file, left_surface, right_surface, smooth_kernel):
     """
     Apply spatial smoothing to fMRI data
     
@@ -20,7 +20,7 @@ def smooth_fmri_data(input_file, output_file, left_surface, right_surface, smoot
         output_file: Path for output file
         left_surface: Left hemisphere surface file
         right_surface: Right hemisphere surface file
-        smoothing_fwhm: Smoothing kernel FWHM
+        smooth_kernel: Smoothing kernel (sigma)
         
     Returns:
         bool: True if successful
@@ -29,7 +29,7 @@ def smooth_fmri_data(input_file, output_file, left_surface, right_surface, smoot
         subprocess.run([
             'wb_command', '-cifti-smoothing',
             input_file,
-            str(smoothing_fwhm), str(smoothing_fwhm),
+            str(smooth_kernel), str(smooth_kernel),
             'COLUMN',
             output_file,
             '-left-surface', left_surface,
